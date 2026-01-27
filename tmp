@@ -1,0 +1,30 @@
+# Taken from Ndiaye's stableCP
+def my_ridgeCP(A, B, alpha):
+    n_samples = A.shape[0] - 1
+    S, U, V = [], [], []
+
+    for i in range(n_samples):
+        inter, u, v = make_interval(A[i], B[i], A[-1], B[-1])
+        S += [inter]
+        U += [u]
+        V += [v]
+
+    hat_y = np.sort([-np.inf] + U + V + [np.inf])
+    size = hat_y.shape[0]
+    conf_pred = P.empty()
+    p_values = np.zeros(size)
+
+    for i in range(size - 1):
+
+        n_pvalue_i = 0.0
+        intvl_i = P.closed(hat_y[i], hat_y[i + 1])
+
+        for j in range(n_samples):
+            n_pvalue_i += intvl_i in S[j]
+
+        p_values[i] = n_pvalue_i / (n_samples + 1)
+
+        if p_values[i] > alpha:
+            conf_pred = conf_pred.union(intvl_i)
+
+    return conf_pred, hat_y, p_values, S

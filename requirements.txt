@@ -9,3 +9,4 @@ black
 black[jupyter]
 isort
 plotly
+scipy

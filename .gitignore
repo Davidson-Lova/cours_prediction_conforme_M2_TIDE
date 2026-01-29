@@ -17,7 +17,4 @@
 *.tex
 *.toc
 
-/lectures/tmp
-
-/notebooks/full_conformal.ipynb
 /lectures/figures
